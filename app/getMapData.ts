@@ -46,9 +46,7 @@ let calculateOptionTask = () => {
   fs.writeFileSync("./resultData.json",JSON.stringify(result))
   console.log("task finish !!!")
 }
-
-calculateOptionTask()
-
+// calculateOptionTask()
 
 let calculateOptionAboutX = () => {
   let sourceXStr = fs.readFileSync("./sourceData/sourceX.json",{encoding:"binary"})
