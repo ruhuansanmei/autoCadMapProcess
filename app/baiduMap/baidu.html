@@ -2,13 +2,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<style type="text/css">
 		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
 		#allmap{height:500px;width:100%;}
 		#r-result{width:100%;}
 	</style>
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=GRyLmxE5hKZm4Rso26H81qwQqhKesoOx"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=GRyLmxE5hKZm4Rso26H81qwQqhKesoOx"></script>
+  <script type="text/javascript" src="../../node_modules/_coordtransform@2.1.2@coordtransform/index.js"></script>
 	<title>添加/删除覆盖物</title>
 </head>
 <body>
@@ -34,7 +35,7 @@
       console.log(pointList)
       let finalPoints = []
       let convertor = new BMap.Convertor();
-      let transPoints = (pointList,cursor = 0,cb =null) =>{
+      let transPoints = (pointList,cursor = 0,cb =null) => {
           if (cursor < pointList.length) {
               console.log(cursor)
               convertor.translate(pointList.slice(cursor,cursor + 3) ,1,5,(dataConvert) => {
@@ -57,47 +58,31 @@
   } 
 
 
-
-
-
-  // for (let i in data.features) {
-  //   let d = data.features[i]
-  //   // console.log(d.geometry)
-    
-  //   for(let polySource of d.geometry.coordinates ) {
-  //     let pointList = polySource.map(x => new BMap.Point(x[0], x[1]))
-  //     console.log(pointList)
-  //     let finalPoints = []
-  //     let convertor = new BMap.Convertor();
-  //     let transPoints = (pointList,cursor = 0,cb =null) =>{
-  //         if (cursor < pointList.length) {
-  //             console.log(cursor)
-  //             convertor.translate(pointList.slice(cursor,cursor + 3) ,1,5,(dataConvert) => {
-  //                 console.log(dataConvert)
-  //                 finalPoints.push(...dataConvert.points)
-  //                 console.log(finalPoints)
-  //                 cursor += 3
-  //                 transPoints(pointList,cursor,cb)
-  //             })
-  //         } else {
-  //           let polyR = new BMap.Polygon(finalPoints,{strokeColor:"red", strokeWeight:2, strokeOpacity:0.5})
-  //           map.addOverlay(polyR)  
-  //         }
-  //       }
-  //       transPoints(pointList)
-  //     let poly = new BMap.Polygon(pointList,{strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5})
-  //     map.addOverlay(poly)
-     
-  //   }
-  
-  // }
+    let processOne2 = (d, cb) => {
+    for(let polySource of d.geometry.coordinates ) {
+      let pointList = polySource.map(x => new BMap.Point(x[0], x[1]))
+      console.log(pointList)
+      let finalPoints = pointList.map(x => {
+         let gcjCor =  coordtransform.wgs84togcj02(x.lng, x.lat) 
+         let bdCor =   coordtransform.gcj02tobd09(gcjCor[0],gcjCor[1])  
+         return new BMap.Point(bdCor[0], bdCor[1])
+        //  return x
+      })
+      console.log(finalPoints)            
+      let newPoly = new BMap.Polygon(finalPoints, {strokeColor:"red", strokeWeight:2, strokeOpacity:0.5})
+      map.addOverlay(newPoly)
+      let poly = new BMap.Polygon(pointList,{strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5})
+      map.addOverlay(poly)
+      cb()
+    }
+  } 
 
   let processOneByOne = (featureList, cb) => {
     let feature = featureList.pop()
     if (!feature) {
       cb()
     } else {
-       processOne(feature,() => {
+       processOne2(feature,() => {
          processOneByOne(featureList,cb)
        }) 
     } 
@@ -123,16 +108,6 @@
 		new BMap.Point(116.401772,39.921364),
 		new BMap.Point(116.41248,39.927893)
 	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  //创建多边形
-  
-  
-
-
-
-
-
-
-
-
 
 	var pStart = new BMap.Point(116.392214,39.918985);
 	var pEnd = new BMap.Point(116.41478,39.911901);
