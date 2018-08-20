@@ -7,7 +7,7 @@
         "outDir": "dist"
     },
     "include": [
-        "app"
+        "app","test"
     ],
     "exclude": [
         "dist","tscongig.json","package.json","result"
