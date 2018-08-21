@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <style type="text/css">
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      font-family: "微软雅黑";
+    }
+
+    #allmap {
+      height: 500px;
+      width: 100%;
+    }
+
+    #r-result {
+      width: 100%;
+    }
+  </style>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=GRyLmxE5hKZm4Rso26H81qwQqhKesoOx"></script>
+  <!-- <script type="text/javascript" src="../../node_modules/_coordtransform@2.1.2@coordtransform/index.js"></script> -->
+  <script type="text/javascript" src="../../node_modules/echarts/dist/echarts.min.js"> </script>
+  <script type="text/javascript" src="../../node_modules/echarts/dist/extension/bmap.min.js"></script>
+  <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
+
+
+  <title>添加/删除覆盖物</title>
+</head>
+
+<body>
+  <div id="allmap"></div>
+  <div id="r-result">
+    <input type="button" onclick="add_overlay();" value="添加覆盖物" />
+    <input type="button" onclick="remove_overlay();" value="删除覆盖物" />
+  </div>
+</body>
+
+</html>
+<script type="text/javascript">
+  let myChart = echarts.init(allmap)
+  myChart.showLoading()
+
+  shangzhuangJson = {}
+let count = 0
+for (let obj of  shangzhuangJson.features ) {
+  ++count
+  obj.id= `${count}`
+  obj.properties.name = "123"
+  obj.geometry.coordinates.map(x => x.pop())
+
+
+}
+console.log(shangzhuangJson)
+
+
+
+
+
+
+  myChart.hideLoading()
+  echarts.registerMap("shangzhuang", shangzhuangJson)
+
+
+
+
+
+
+  option = {
+    title: {
+      text: 'USA Population Estimates (2012)',
+      subtext: 'Data from www.census.gov',
+    },
+    tooltip: {
+        trigger: 'item',
+        showDelay: 0,
+        transitionDuration: 0.2,
+        formatter: function (params) {
+            var value = (params.value + '').split('.');
+            value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
+            return params.seriesName + '<br/>' + params.name + ': ' + value;
+        }
+    },
+    // visualMap: {
+    //   left: 'right',
+    //   min: 500000,
+    //   max: 38000000,
+    //   inRange: {
+    //     color: ['e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+    //   },
+    //   text: ['High', 'Low'],           // 文本，默认为数值文本
+    //   calculable: true
+    // },
+    series:[
+    {
+                name: 'USA PopEstimates',
+                type: 'map',
+                roam: true,
+                map: 'shangzhuang',
+                }
+      ]
+  };
+
+  myChart.setOption(option)
+
+
+</script>

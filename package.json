@@ -11,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "coordtransform": "^2.1.2",
-    "fs": "^0.0.1-security"
+    "dxf": "^3.2.3",
+    "echarts": "^4.1.0",
+    "fs": "^0.0.1-security",
+    "jquery": "^3.3.1"
   }
 }
