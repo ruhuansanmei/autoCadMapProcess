@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts": "tsc | cp app/*.json dist/"
   },
-  "author": "",
+  "author": "ruhuansanmei",
   "license": "ISC",
   "dependencies": {
     "coordtransform": "^2.1.2",

@@ -1,5 +1,5 @@
-import geoJson = require("./133")
-import samplePairData  = require("./data")
+// import geoJson = require("./133")
+// import samplePairData  = require("./data")
 // import sourceX = require("./sourceX")
 // import sourceY = require( "./sourceY")
 
@@ -89,8 +89,21 @@ taskR()
 
 
 
+let calExternalPoint = (lng:number, lat: number) => {
+  let calOptionX = {"a":0.000005833373473949451,"b":116.36259045415659}
+  let calOptionY = {"a":0.000004496058479481112,"b":39.873504132281035}
+  let lntR = getRealCordinate(lng,calOptionX)
+  let latR = getRealCordinate(lat, calOptionY)
+  let result = {lntR, latR}
+  // console.log(result)
+  // console.log("task finish !!!")
+  return result
+}
 
 
+// calExternalPoint(-17630,6730)
+
+export {calExternalPoint}
 
 
 
