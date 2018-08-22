@@ -3,61 +3,60 @@
 // import sourceX = require("./sourceX")
 // import sourceY = require( "./sourceY")
 "use strict";
-var fs = require("fs");
 var getRealCordinate = function (x, calOption) {
     var a = calOption.a, b = calOption.b;
     return a * x + b;
 };
-var calculateOption = function (samplePair) {
-    var one = samplePair.one, two = samplePair.two;
-    var x1 = one.x;
-    var y1 = one.y;
-    var x2 = two.x;
-    var y2 = two.y;
-    var a = (y1 - y2) / (x1 - x2);
-    var b = (x1 * y2 - y1 * x2) / (x1 - x2);
-    var calOption = { a: a, b: b };
-    return calOption;
-};
-//测试计算结果
-var calculateOptionTask = function () {
-    var result = calculateOption(samplePairData);
-    fs.writeFileSync("./resultData.json", JSON.stringify(result));
-    console.log("task finish !!!");
-};
-// calculateOptionTask()
-var calculateOptionAboutX = function () {
-    var sourceXStr = fs.readFileSync("./sourceData/sourceX.json", { encoding: "binary" });
-    var sourceX = JSON.parse(sourceXStr);
-    var result = calculateOption(sourceX);
-    fs.writeFileSync("./result/resultX.json", JSON.stringify(result));
-};
-var calculateOptionAboutY = function () {
-    var sourceYStr = fs.readFileSync("./sourceData/sourceY.json", { encoding: "binary" });
-    var sourceY = JSON.parse(sourceYStr);
-    var result = calculateOption(sourceY);
-    fs.writeFileSync("./result/resultY.json", JSON.stringify(result));
-};
-var task = function () {
-    calculateOptionAboutX();
-    calculateOptionAboutY();
-    return "task finish !!!";
-};
-// task()
-var calThirdPoint = function (lng, lat) {
-    var calOptionXStr = fs.readFileSync("./result/resultX.json", { encoding: "binary" });
-    var calOptionX = JSON.parse(calOptionXStr);
-    var calOptionYStr = fs.readFileSync("./result/resultY.json", { encoding: "binary" });
-    var calOptionY = JSON.parse(calOptionYStr);
-    var lntR = getRealCordinate(lng, calOptionX);
-    var latR = getRealCordinate(lat, calOptionY);
-    var result = { lntR: lntR, latR: latR };
-    console.log(result);
-    console.log("task finish !!!");
-};
-var taskR = function () {
-    calThirdPoint(-17630, 6730);
-};
+// let calculateOption = (samplePair:SamplePair):CalOption =>  {
+//   let {one , two} = samplePair
+//   let x1 = one.x
+//   let y1 = one.y
+//   let x2 = two.x
+//   let y2 = two.y
+//   let a = ( y1 - y2) / (x1 - x2)
+//   let b = (x1*y2 - y1 * x2) / (x1 - x2)
+//   let calOption : CalOption = {a,b}
+//   return calOption
+// }
+// //测试计算结果
+// let calculateOptionTask = () => {
+//   let result = calculateOption(samplePairData)
+//   fs.writeFileSync("./resultData.json",JSON.stringify(result))
+//   console.log("task finish !!!")
+// }
+// // calculateOptionTask()
+// let calculateOptionAboutX = () => {
+//   let sourceXStr = fs.readFileSync("./sourceData/sourceX.json",{encoding:"binary"})
+//   let sourceX = JSON.parse(sourceXStr)
+//   let result = calculateOption(sourceX)
+//   fs.writeFileSync("./result/resultX.json",JSON.stringify(result))
+// }
+// let calculateOptionAboutY = () => {
+//   let sourceYStr = fs.readFileSync("./sourceData/sourceY.json",{encoding:"binary"})
+//   let sourceY = JSON.parse(sourceYStr)
+//   let result = calculateOption(sourceY)
+//   fs.writeFileSync("./result/resultY.json", JSON.stringify(result))
+// }
+// let task = () => {
+//   calculateOptionAboutX()
+//   calculateOptionAboutY()
+//   return "task finish !!!"
+// }
+// // task()
+// let calThirdPoint = (lng:number, lat: number) => {
+//   let calOptionXStr  = fs.readFileSync("./result/resultX.json",{encoding:"binary"})
+//   let calOptionX = JSON.parse(calOptionXStr) 
+//   let calOptionYStr = fs.readFileSync("./result/resultY.json",{encoding:"binary"}) 
+//   let calOptionY = JSON.parse(calOptionYStr)
+//   let lntR = getRealCordinate(lng,calOptionX)
+//   let latR = getRealCordinate(lat, calOptionY)
+//   let result = {lntR, latR}
+//   console.log(result)
+//   console.log("task finish !!!")
+// }
+// let taskR = () => {
+//   calThirdPoint(-17630,6730)
+// }
 // taskR()
 var calExternalPoint = function (lng, lat) {
     var calOptionX = { "a": 0.000005833373473949451, "b": 116.36259045415659 };
