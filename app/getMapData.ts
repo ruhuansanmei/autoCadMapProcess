@@ -85,7 +85,7 @@ let taskR = () => {
   calThirdPoint(-17630,6730)
 }
 
-taskR()
+// taskR()
 
 
 
