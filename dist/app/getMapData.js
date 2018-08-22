@@ -58,7 +58,7 @@ var calThirdPoint = function (lng, lat) {
 var taskR = function () {
     calThirdPoint(-17630, 6730);
 };
-taskR();
+// taskR()
 var calExternalPoint = function (lng, lat) {
     var calOptionX = { "a": 0.000005833373473949451, "b": 116.36259045415659 };
     var calOptionY = { "a": 0.000004496058479481112, "b": 39.873504132281035 };
