@@ -135,7 +135,7 @@ let toButtomMap = (fileName) => {
   console.log('finish')  
 }
 
-toButtomMap("./园林.json")
+// toButtomMap("./园林.json")
 
 
 // addOriginData("./园林绿化局.json")
@@ -164,6 +164,26 @@ let tongzhou84_02 = (fileName) => {
 }
 
 
-// tongzhou84_02("./tongzhou.geojson")
+// tongzhou84_02("./tz.geojson")
+
+let tongzhouModifyALittle = (fileName) => {
+  let dataSourceStr = fs.readFileSync(`./${fileName}`,'utf-8')
+  let dataSource = JSON.parse(dataSourceStr)
+  dataSource.features.map(feature => {
+    feature.geometry.coordinates.map(l1 => {
+      l1.map(l2 => {
+        l2.map(l3 => {
+          console.log(l3)
+          l3[0] = l3[0] * 1.0024187932941757 - 0.2817281483490895
+          l3[1] = l3[1] * 1.0000743519251467-0.002666652058956591
+        })
+      })
+    })
+  })
+  fs.writeFileSync(`./${fileName}.result.json`,JSON.stringify(dataSource))
+  console.log("task finished")
+}
+tongzhouModifyALittle("./tongzhou.geojson.result.json")
+
 
 
